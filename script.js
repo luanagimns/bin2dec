@@ -1,27 +1,34 @@
-console.log("JS carregou!");
-
 const input = document.getElementById("binaryInput");
 const button = document.getElementById("convertButton");
 const result = document.getElementById("resultValue");
 
-button.addEventListener("click", () => {
-    console.log("clicou");
+function convert() {
+    const binary = input.value.trim();
 
-    const binary = input.value;
+    result.classList.remove("success", "error");
 
-    // validação básica
+    if (binary === "") {
+        result.textContent = "Digite um número";
+        result.classList.add("error");
+        return;
+    }
+
     if (!/^[01]+$/.test(binary)) {
-        result.textContent = "Digite apenas 0 e 1";
+        result.textContent = "Apenas 0 e 1";
+        result.classList.add("error");
         return;
     }
 
     const decimal = parseInt(binary, 2);
-    result.textContent = decimal;
-});
+
+    result.textContent = `Resultado: ${decimal}`;
+    result.classList.add("success");
+}
+
+button.addEventListener("click", convert);
 
 input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-        button.click();
+        convert();
     }
 });
-
